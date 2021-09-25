@@ -68,6 +68,20 @@ export default class MyPlugin extends Plugin {
 			const editor = view.sourceMode.cmEditor;
 			// 记住光标的位置
 			const cursor = editor.getCursor();
+			const  { left, top }  = editor.getScrollInfo();
+			var linenumber = editor.lineCount();
+			// // 输出十个 10
+			// for (var j = 0; j < linenumber; j++) {
+			// 	var data = editor.getLine(j);
+			// 	var newdata = this.settings.editname + this.settings.separator + " "  + moment().format(this.settings.timestyle);
+			// 	var regstr = new RegExp("^" + this.settings.editname + this.escapeRegExp(this.settings.separator) + ".*$")
+			// 	if (data.match(regstr)) {
+			// 		console.log(data);
+			// 		var doc = editor.getDoc();
+			// 		doc.setLine(j, newdata);
+			// 		break;
+			// 	}
+			// }
 			var doc = editor.getDoc();
 			var data = doc.getValue();
 			var newdata = this.settings.editname + this.settings.separator + " "  + moment().format(this.settings.timestyle);
@@ -76,6 +90,7 @@ export default class MyPlugin extends Plugin {
 			doc.setValue(data1)
 			// 设置光标的位置
 			editor.setCursor(cursor);
+			editor.scrollTo(left, top);
 		}
 		else {
 			console.log("not view")
@@ -133,6 +148,8 @@ class SampleSettingTab extends PluginSettingTab {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
+
+	
 	// 界面配置
 	display(): void {
 		let {containerEl} = this;
